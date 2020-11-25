@@ -4,6 +4,7 @@ import (
 	"hw/models"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -19,7 +20,19 @@ func GetAllRole(c *gin.Context) {
 
 // 取得單一筆資料
 func GetOneRole(c *gin.Context) {
+	idString := c.Param("id")
+	id, err := strconv.ParseUint(idString, 10, 32)
+	if err != nil {
+		log.Fatal(err)
+	}
 
+	for i := range *Data {
+		if (*Data)[i].ID == uint(id) {
+			c.JSON(http.StatusOK, (*Data)[i])
+			return
+		}
+	}
+	c.AbortWithStatus(http.StatusNotFound)
 }
 
 // 新增資料
