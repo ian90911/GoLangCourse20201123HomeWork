@@ -79,5 +79,25 @@ func PutRole(c *gin.Context) {
 
 // 刪除資料
 func DeleteRole(c *gin.Context) {
+	idString := c.Param("id")
+	id, err := strconv.ParseUint(idString, 10, 32)
+	if err != nil {
+		log.Fatal(err)
+	}
 
+	for i := range *Data {
+		if (*Data)[i].ID == uint(id) {
+			DeleteRoleByIndex(Data, i)
+			c.AbortWithStatus(http.StatusOK)
+			return
+		}
+	}
+	c.AbortWithStatus(http.StatusNotFound)
+}
+
+func DeleteRoleByIndex(source *[]models.Role, indexToDelete int) {
+	a := (*source)[:indexToDelete]
+	b := (*source)[indexToDelete+1:]
+	(*source) = append(a, b...)
+	return
 }
