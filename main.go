@@ -10,12 +10,13 @@ import (
 )
 
 var Data []models.Role
+var LatestRoleId uint
+var LatestSkillId uint
 
 func main() {
 	context.Background()
 	router := gin.Default()
 	initRoutes(router)
-	controllers.Data = &Data
 	router.Run(":8080")
 }
 
@@ -44,4 +45,10 @@ func init() {
 			},
 		},
 	}
+	LatestRoleId = Data[len(Data)-1].ID
+	LatestSkillId = Data[len(Data)-1].Skills[len(Data[len(Data)-1].Skills)-1].ID
+
+	controllers.Data = &Data
+	controllers.LatestRoleId = &LatestRoleId
+	controllers.LatestSkillId = &LatestSkillId
 }
