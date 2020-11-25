@@ -47,9 +47,7 @@ func PostRole(c *gin.Context) {
 	for i := range role.Skills {
 		role.Skills[i].ID = *GetLatestSkillId()
 	}
-	roleSlice := make([]models.Role, 1, 1)
-	roleSlice = append(roleSlice, role)
-	*Data = append(*Data, roleSlice...)
+	*Data = append(*Data, role)
 
 	c.JSON(http.StatusOK, role)
 }
