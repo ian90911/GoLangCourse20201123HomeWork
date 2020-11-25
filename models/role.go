@@ -27,3 +27,8 @@ type RoleVM struct {
 	Name    string `json:"name"`    // 角色名稱
 	Summary string `json:"summary"` // 介紹
 }
+
+type RolePutVM struct {
+	Name    string `json:"name"`    // 角色名稱
+	Summary string `json:"summary"` // 介紹
+}

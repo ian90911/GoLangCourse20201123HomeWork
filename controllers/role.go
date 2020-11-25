@@ -56,7 +56,27 @@ func PostRole(c *gin.Context) {
 
 // 更新資料, 更新角色名稱與介紹
 func PutRole(c *gin.Context) {
+	idString := c.Param("id")
+	id, err := strconv.ParseUint(idString, 10, 32)
+	if err != nil {
+		log.Fatal(err)
+	}
 
+	role := models.RolePutVM{}
+	err = c.BindJSON(&role)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	for i := range *Data {
+		if (*Data)[i].ID == uint(id) {
+			(*Data)[i].Name = role.Name
+			(*Data)[i].Summary = role.Summary
+			c.JSON(http.StatusOK, (*Data)[i])
+			return
+		}
+	}
+	c.AbortWithStatus(http.StatusNotFound)
 }
 
 // 刪除資料
