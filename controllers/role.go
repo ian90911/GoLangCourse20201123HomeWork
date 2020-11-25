@@ -9,8 +9,8 @@ import (
 )
 
 var Data *[]models.Role
-var LatestRoleId *uint
-var LatestSkillId *uint
+var GetLatestRoleId func() *uint
+var GetLatestSkillId func() *uint
 
 // 取得全部資料
 func GetAllRole(c *gin.Context) {
@@ -29,11 +29,10 @@ func PostRole(c *gin.Context) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	*LatestRoleId++
-	role.ID = *LatestRoleId
+
+	role.ID = *GetLatestRoleId()
 	for i := range role.Skills {
-		*LatestSkillId++
-		role.Skills[i].ID = *LatestSkillId
+		role.Skills[i].ID = *GetLatestSkillId()
 	}
 	roleSlice := make([]models.Role, 1, 1)
 	roleSlice = append(roleSlice, role)

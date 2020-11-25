@@ -49,6 +49,16 @@ func init() {
 	LatestSkillId = Data[len(Data)-1].Skills[len(Data[len(Data)-1].Skills)-1].ID
 
 	controllers.Data = &Data
-	controllers.LatestRoleId = &LatestRoleId
-	controllers.LatestSkillId = &LatestSkillId
+	controllers.GetLatestRoleId = newRoleId
+	controllers.GetLatestSkillId = newSkillId
+}
+
+func newRoleId() *uint {
+	LatestRoleId++
+	return &LatestRoleId
+}
+
+func newSkillId() *uint {
+	LatestSkillId++
+	return &LatestSkillId
 }
